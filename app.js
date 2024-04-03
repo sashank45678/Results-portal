@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const DATABASE_URL="mongodb+srv://dtarunsai08:4tpqOW74BQZ8ARzl@cluster0.putncw7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const DATABASE_URL="your URL"
 const session = require("express-session");
 var MongoDBStore = require('connect-mongodb-session')(session);
 const bcrypt=require('bcryptjs')
