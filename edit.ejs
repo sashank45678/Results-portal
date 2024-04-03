@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <input
+      class="border border-black mx-2 rounded-lg px-2 py-2 mt-3"
+      id="name"
+      value=""
+      type="text"
+      placeholder="enter the newname"
+    />
+    <button id="save" class="bg-red-300 px-2 py-1 rounded-lg w-24 mt-3">
+      save
+    </button>
+    <a href="/logout">logout</a>
+  </body>
+  <script>
+    const save = document.getElementById("save");
+    document.addEventListener("DOMContentLoaded", function () {
+      const queryParams = new URLSearchParams(window.location.search);
+      const id = queryParams.get("id");
+      save.addEventListener("click", async function (e) {
+        const data = await fetch("/edit/" + id, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            changedname: document.getElementById("name").value,
+          }),
+        });
+        const result=await data.json()
+        window.location.href="/dashboard"
+      });
+    });
+  </script>
+</html>

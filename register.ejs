@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+  
+</head>
+<body>
+  <div class="relative">
+    <img class="w-full h-full" src="https://images.unsplash.com/photo-1538947151057-dfe933d688d1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+    <div class="flex justify-center  absolute top-36 left-[39%] border border-black rounded-xl w-96 h-[62%] shadow-2xl pl-12 border-opacity-35" >
+      <form method="post" action="/register">
+        <h1 class="text-center text-3xl text-black font-semibold font-sansp-2 mr-14 mt-6">SignUp</h1>
+        <input name="name" value=""class="px-4 py-3 mt-5 shadow-2xl rounded-full w-72" type="text" placeholder="Full Name" required>
+        <input name="emailid" value=""class="px-4 py-3 mt-5 shadow-2xl rounded-full w-72" type="text" placeholder="Email Id" required>
+        <input name="passwordkey" value=""class="px-4 py-3 mt-4 shadow-2xl rounded-full w-72" type="password" placeholder="Password" required>
+        <select id="person" name="person" value="admin" class="w-72 px-4 py-3 mt-3 shadow-lg rounded-full">
+          <option value="admin">admin</option>
+          <option value="student">student</option>
+          <option value="teacher">teacher</option>
+        </select>
+        <select id="subjects" name="subject" value="oose" class="w-72 px-4 py-3 mt-4 shadow-lg rounded-full">
+          <option value="oose">oose</option>
+          <option value="wt">wt</option>
+          <option value="ml">ml</option>
+          <option value="java">java</option>
+        </select>
+        <input name="rollno" id="roll" value=""class="px-4 py-3 mt-5 shadow-2xl rounded-full w-72" type="text" placeholder="admission number">
+        <button type="submit" class="w-72 bg-blue-300 text-black px-2 py-3 mt-8 mb-4 font-semibold rounded-full shadow-lg">SignUp</button>
+        <span class="text-center font-semibold px-2 py-4 text-pretty text-xl">
+          Already have an account?<a href="/login">Login</a>
+        </span>
+
+      </form>
+    </div>
+  </div>
+</body>
+<script>
+  if(document.getElementById("person").value=="admin"){
+    document.getElementById("subjects").style.display="none"
+    document.getElementById("roll").style.display="none"
+  }
+  document.getElementById("person").addEventListener('change',function(e){
+    if(e.target.value=="teacher"){
+      document.getElementById("subjects").style.display="block"
+    }
+    else{
+      document.getElementById("subjects").style.display="none"
+    }
+    if(e.target.value=="student"){
+      document.getElementById("roll").style.display="block"
+      document.getElementById("roll").setAttribute("required","")
+    }
+    else{
+      document.getElementById("roll").removeAttribute("required","")
+      document.getElementById("roll").style.display="none"
+    }
+  })
+</script>
+
+</html>

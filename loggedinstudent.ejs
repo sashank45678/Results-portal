@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Results Portal</title>
+  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: "#da373d", // Custom color example, use if needed
+          },
+        },
+      },
+    };
+  </script>
+  <body class="bg-gray-200">
+    <header class="bg-white shadow-md p-4 mb-6">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">Results Portal</h1>
+        <div>
+          <a
+            href="/responses/<%= data[0].rollno %>"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+            >View Responses</a
+          >
+          <a
+            href="/logout"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 ml-4 rounded transition duration-300 ease-in-out"
+            >Logout</a
+          >
+        </div>
+      </div>
+    </header>
+    <div class="flex justify-center items-center">
+      <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl">
+        <ul class="divide-y divide-gray-300">
+          <li class="flex justify-between items-center py-4">
+            <div class="flex-1">
+              <h2 class="text-lg font-semibold">Subject</h2>
+            </div>
+            <div class="flex-1 text-right">
+              <h2 class="text-lg font-semibold">Marks</h2>
+            </div>
+            <div class="w-32 text-right">
+              <h2 class="text-lg font-semibold">Action</h2>
+            </div>
+          </li>
+          <!-- Dynamically generated subject rows will go here -->
+          <li class="flex justify-between items-center py-4">
+            <div class="flex-1">
+              <p class="text-lg font-medium text-gray-700">OOSE</p>
+            </div>
+            <div class="flex-1 text-right">
+              <p class="text-lg font-medium text-gray-700">
+                <%= data[0].marks.oose %>
+              </p>
+            </div>
+            <div class="w-32 text-right">
+              <button
+                name="subject"
+                value="oose"
+                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition duration-300 ease-in-out focus:outline-none"
+              >
+                Challenge
+              </button>
+            </div>
+          </li>
+          <li class="flex justify-between items-center py-4">
+            <div class="flex-1">
+              <p class="text-lg font-medium text-gray-700">Web Technologies</p>
+            </div>
+            <div class="flex-1 text-right">
+              <p class="text-lg font-medium text-gray-700">
+                <%= data[0].marks.wt %>
+              </p>
+            </div>
+            <div class="w-32 text-right">
+              <button
+                name="subject"
+                value="wt"
+                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition duration-300 ease-in-out focus:outline-none"
+              >
+                Challenge
+              </button>
+            </div>
+          </li>
+          <li class="flex justify-between items-center py-4">
+            <div class="flex-1">
+              <p class="text-lg font-medium text-gray-700">Machine learning</p>
+            </div>
+            <div class="flex-1 text-right">
+              <p class="text-lg font-medium text-gray-700">
+                <%= data[0].marks.ml %>
+              </p>
+            </div>
+            <div class="w-32 text-right">
+              <button
+                name="subject"
+                value="ml"
+                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition duration-300 ease-in-out focus:outline-none"
+              >
+                Challenge
+              </button>
+            </div>
+          </li>
+          <li class="flex justify-between items-center py-4">
+            <div class="flex-1">
+              <p class="text-lg font-medium text-gray-700">Java Language</p>
+            </div>
+            <div class="flex-1 text-right">
+              <p class="text-lg font-medium text-gray-700">
+                <%= data[0].marks.java %>
+              </p>
+            </div>
+            <div class="w-32 text-right">
+              <button
+                name="subject"
+                value="java"
+                class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md transition duration-300 ease-in-out focus:outline-none"
+              >
+                Challenge
+              </button>
+            </div>
+          </li>
+          <li class="flex flex-row justify-between items-center py-4">
+            <p class="font-bold text-xl">Total</p>
+            <p id="result" class="font-bold text-xl">0</p>
+          </li>
+          <!-- Repeat for other subjects -->
+        </ul>
+      </div>
+    </div>
+    <script>
+      const mlMarks = "<%= data[0].marks.ml %>";
+      const ooseMarks = "<%= data[0].marks.oose %>";
+      const wtMarks = "<%= data[0].marks.wt %>";
+      const javaMarks = "<%= data[0].marks.java %>";
+
+      function calculateGPA(marks) {
+
+          marks = parseInt(marks)
+          console.log(marks);
+          if (marks >= 90) {
+              return 10.0;
+          } else if (marks >= 80) {
+              return 9.0;
+          } else if (marks >= 70) {
+              return 8.0;
+          } else if (marks >= 60) {
+              return 7.0;
+          } else if (marks >= 50) {
+              return 6.0;
+          } else if (marks >= 40) {
+              return 5.0;
+          } else {
+              return 0.0;
+          }
+      }
+
+      // Calculate GPA for each subject
+      const mlGPA = calculateGPA(mlMarks);
+      const ooseGPA = calculateGPA(ooseMarks);
+      const wtGPA = calculateGPA(wtMarks);
+      const javaGPA = calculateGPA(javaMarks);
+      console.log(mlGPA,ooseGPA,wtGPA,javaGPA);
+      // Calculate overall GPA
+      const overallGPA = (mlGPA + ooseGPA + wtGPA + javaGPA) / 4;
+
+      // Display the overall GPA
+      document.getElementById("result").textContent = "Overall GPA: " + overallGPA.toFixed(2);
+
+            const results = document.querySelectorAll("[name='subject']");
+            console.log(results);
+            results.forEach((subject) => {
+              console.log("button clicked")
+              subject.addEventListener("click", async function (e) {
+                const data = await fetch("/challenges", {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    rollno: "<%= data[0].rollno %>",
+                    teacher: subject.value,
+                  }),
+                });
+                const result = await data.json();
+                window.alert("Challenge has been submitted");
+              });
+            });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+  
+</head>
+<body class="bg-gray-100 p-4">
+    <header class="flex justify-between items-center p-4 bg-white shadow">
+        <h1 class="text-xl font-semibold text-gray-800">Results Portal</h1>
+        <div>
+            <button onclick="history.back()" class="text-indigo-500 hover:text-indigo-600">Back</button>
+            <a href="/logout" class="ml-4 text-red-500 hover:text-red-600">Logout</a>
+        </div>
+    </header>
+    <% if (data.length > 0) { %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+            <% data.forEach((complaint) => { %>
+                <form class="bg-white p-4 rounded shadow-md" method="post" enctype="multipart/form-data" action="/viewchallenges/<%= complaint.admissionNumber %>">
+                    <p class="font-semibold text-lg"><%= complaint.admissionNumber %></p>
+                    <div class="mt-2">
+                        <label for="explanation" class="block text-sm font-medium text-gray-700">Explanation:</label> 
+                        <% if(complaint.status=="done") { %>
+                        <input type="text" name="<%=complaint.admissionNumber%>" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 h-12 rounded-md px-2 py-1" placeholder="<%=complaint.explanation%>" disabled required>
+                        <% } else { %>
+                          <input type="text" name="<%=complaint.admissionNumber%>" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 h-12 rounded-md px-2 py-1" placeholder="Give explanation" required>
+                          <% } %>
+                    </div>
+                    <div>
+                        <span>Status:</span>
+                        <span><%=complaint.status%></span>
+                    </div>
+                    <div class="mt-4">
+                        <label for="file" class="block text-sm font-medium text-gray-700">Upload response file:</label>
+                        <% if(complaint.status=="done") { %>
+                          <input name="pdf" type="file" id="file" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 h-8 rounded-md" disabled required>
+                        <% } else { %>
+                            <input name="pdf" type="file" id="file" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 h-8 rounded-md" placeholder="Insert file here" required>
+                        <% } %>
+                      </div>
+
+                    <button name="response" type="submit" class="bg-red-400 py-1 px-2 rounded-md text-white my-2" value="<%=subject%>">
+                        Add response
+                    </button>
+                </form>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="text-xl font-semibold text-center text-gray-800 mt-8">No challenges received</p>
+    <% } %>
+</body>
+</html>
